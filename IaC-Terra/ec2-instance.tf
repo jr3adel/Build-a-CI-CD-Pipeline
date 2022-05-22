@@ -2,7 +2,6 @@
 resource "aws_instance" "web" {
   ami           = var.ami_image
   instance_type = "t3.micro"
-  availability_zone = var.aws_avail_zone
   key_name = var.key_pem
 
   network_interface {

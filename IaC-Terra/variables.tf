@@ -35,17 +35,26 @@ variable "subnet_cidr_block" {
   default     = "10.0.1.0/24"
 }
 
-variable "subnet_cidr_block_private" {
+variable "subnet_cidr_block_private1" {
   type        = string
   description = "Base CIDR Block For Subnet "
   default     = "10.0.2.0/24"
 }
-variable "aws_avail_zone" {
+variable "subnet_cidr_block_private2" {
   type        = string
-  description = "Avaialability Zone for AWS Subnet"
+  description = "Base CIDR Block For Subnet "
+  default     = "10.0.3.0/24"
+}
+variable "aws_avail_zone1" {
+  type        = string
+  description = "Avaialability Zone 1 for AWS Subnet"
   default     = "us-east-1a"
 }
-
+variable "aws_avail_zone2" {
+  type        = string
+  description = "Avaialability Zone 2 for AWS Subnet"
+  default     = "us-east-1b"
+}
 variable "private_ip" {
   type        = string
   description = "Private IP For Network Card Interface "
@@ -54,7 +63,7 @@ variable "private_ip" {
 variable "ami_image" {
     type = string
     description = "Ubuntu AMI For EC2"
-    default = "ami-09d56f8956ab235b3 "
+    default = "ami-0c4f7023847b90238"
   
 }
 
@@ -78,4 +87,13 @@ variable "user_name" {
 variable "pass" {
   type = string 
   description = "Password for the Database"
+}
+
+variable "sender_email" {
+  type = string 
+  default = ""
+}
+variable "receiver_email" {
+  type = string 
+  default = ""
 }

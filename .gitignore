@@ -13,3 +13,6 @@
 
 # .pem files
 *.pem
+
+# hcl files
+*.hcl 

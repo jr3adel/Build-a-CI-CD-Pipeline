@@ -38,7 +38,6 @@ resource "aws_route_table" "rt" {
 resource "aws_subnet" "subnet" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = var.subnet_cidr_block
-  availability_zone = var.aws_avail_zone
   depends_on = [aws_internet_gateway.igw]
 
     tags = {
@@ -48,11 +47,22 @@ resource "aws_subnet" "subnet" {
 }
 
 #Create a Private Subnet For AWS RDS MYSQL
-resource "aws_subnet" "priv_subnet" {
+resource "aws_subnet" "priv_subnet1" {
   vpc_id     = aws_vpc.vpc.id
-  cidr_block = var.subnet_cidr_block_private
-  availability_zone = var.aws_avail_zone
+  cidr_block = var.subnet_cidr_block_private1
   map_public_ip_on_launch = false
+  availability_zone = var.aws_avail_zone1
+
+    tags = {
+    Name = "Private Subnet Inside VPC For RDS "
+  }
+}
+resource "aws_subnet" "priv_subnet2" {
+  vpc_id     = aws_vpc.vpc.id
+  cidr_block = var.subnet_cidr_block_private2
+  map_public_ip_on_launch = false
+  availability_zone = var.aws_avail_zone2
+
 
     tags = {
     Name = "Private Subnet Inside VPC For RDS "
@@ -69,7 +79,7 @@ resource "aws_route_table_association" "a" {
 #Create a DataBase Subnet Group 
 
 resource "aws_db_subnet_group" "subnet_group" {
-  subnet_ids = [aws_subnet.priv_subnet.id]
+  subnet_ids = [aws_subnet.priv_subnet1.id,aws_subnet.priv_subnet2.id]
 }
 
 
@@ -87,7 +97,7 @@ resource "aws_network_interface" "nci" {
 
 resource "aws_eip" "eip" {
   vpc                       = true
-  network_interface         = aws_internet_gateway.igw.id
+  network_interface         = aws_network_interface.nci.id
   associate_with_private_ip = var.private_ip
 
     depends_on = [aws_internet_gateway.igw]
