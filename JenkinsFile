@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    
+    tools {
+  terraform 'Terraform-1-1-9'
+}
+    stages{
+         stage('Source Code ')
+        {
+            steps{
+                git credentialsId: 'f6020c88-c792-4958-984a-31fcee7bd316', url: 'https://github.com/jr3adel/Build-a-CI-CD-Pipeline'
+            }
+        }
+        
+        stage('Terraform init ')
+        {
+            steps{
+                sh 'terraform init'
+            }
+        }
+           stage('Terraform apply ')
+        {
+            steps{
+                sh 'terraform apply --auto-approve'
+            }
+        }
+    }
+}
